@@ -1,5 +1,5 @@
-var Test = artifacts.require("./NiftyWallet.sol");
+var NiftyWallet = artifacts.require("./NiftyWallet.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Test);
+  deployer.deploy(NiftyWallet);
 };

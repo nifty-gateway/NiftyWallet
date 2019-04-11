@@ -15,8 +15,8 @@ contract NiftyWallet {
     / Events
     */
 
-    event Execution();
-    event ExecutionFailure();
+    event Execution(address indexed destinationAddress, uint value, bytes txData);
+    event ExecutionFailure(address indexed destinationAddress, uint value, bytes txData);
     event Deposit(address indexed sender, uint value);
 
     /**
@@ -132,9 +132,9 @@ contract NiftyWallet {
         address recoveredAddress = recover(dataHash, _signedData);
         if (recoveredAddress==userSigningAddress) {
             if (external_call(destination, value, data.length, data)) {
-                emit Execution();
-            } else {
-                emit ExecutionFailure();
+              emit Execution(destination, value, data);
+          } else {
+              emit ExecutionFailure(destination, value, data);
             }
             return(true);
         } else {
@@ -143,7 +143,7 @@ contract NiftyWallet {
     }
 
     /** External call function
-     * Taken from Gnosis Mutli Sig wallet
+     * Taken from Gnosis Multi Sig wallet
      * https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol
      */
 
@@ -194,8 +194,6 @@ contract NiftyWallet {
             signature.length == 65,
             "LENGTH_65_REQUIRED"
         );
-
-        //retrieve flag
 
         address recoveredAddress = recover(hash, signature);
         address WALLET_OWNER = returnUserAccountAddress();
