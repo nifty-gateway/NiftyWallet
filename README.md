@@ -1,5 +1,3 @@
-![Nifty Gateway Logo](https://s3-us-west-1.amazonaws.com/nftgimagebucket/FaviconNFTG.png "Nifty Gateway Logo")
-
 ## Synopsis
 
 This is the source code for the Nifty Wallet, a smart contract wallet that makes accessing dapps and web3 applications radically easier.
