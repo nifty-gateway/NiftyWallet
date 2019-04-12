@@ -10,6 +10,7 @@ contract NiftyWallet {
 
     address masterContractAdd = 0x154cECb44DC63bdd2fE3f77Eb230b1f2B0c02122;
     uint userAccountID = 0;
+    uint walletTxCount = 0;
 
     /**
     / Events
@@ -28,6 +29,10 @@ contract NiftyWallet {
         return (m_c_instance.returnUserControlAddress(userAccountID));
     }
 
+    function returnWalletTxCount() public view returns(uint) {
+        return(walletTxCount);
+    }
+
     /**
      * Modifier to check msg.sender
      */
@@ -44,6 +49,9 @@ contract NiftyWallet {
 
     struct mStruct {
         address this_add;
+        address des_add;
+        uint value;
+        uint interalTxCount;
         bytes txData;
     }
 
@@ -54,8 +62,10 @@ contract NiftyWallet {
      * @param txData bytes - txData to hash alongside address
      */
 
-    function returnTxMessageToSign(bytes memory txData) private view returns(bytes32) {
-        mStruct memory message = mStruct(address(this), txData);
+    function returnTxMessageToSign(bytes memory txData,
+                                address des_add,
+                                uint value) private view returns(bytes32) {
+        mStruct memory message = mStruct(address(this), des_add, value, walletTxCount, txData);
         return keccak256(abi.encode(message.this_add, message.txData));
     }
 
@@ -128,13 +138,15 @@ contract NiftyWallet {
                      bytes memory data)
     public onlyValidSender returns (bool) {
         address userSigningAddress = returnUserAccountAddress();
-        bytes32 dataHash = returnTxMessageToSign(data);
+        bytes32 dataHash = returnTxMessageToSign(data, destination, value);
         address recoveredAddress = recover(dataHash, _signedData);
         if (recoveredAddress==userSigningAddress) {
             if (external_call(destination, value, data.length, data)) {
-              emit Execution(destination, value, data);
-          } else {
-              emit ExecutionFailure(destination, value, data);
+                emit Execution(destination, value, data);
+                walletTxCount = walletTxCount + 1;
+            } else {
+                emit ExecutionFailure(destination, value, data);
+                walletTxCount = walletTxCount +1;
             }
             return(true);
         } else {
@@ -143,7 +155,7 @@ contract NiftyWallet {
     }
 
     /** External call function
-     * Taken from Gnosis Multi Sig wallet
+     * Taken from Gnosis Mutli Sig wallet
      * https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol
      */
 
@@ -249,12 +261,11 @@ contract NiftyWallet {
     /** Safe ERC1155 receiver
     * Nifty Wallets will always receive ERC1155s as well
     * We like all tokens
-    * From HorizonGames - https://github.com/horizon-games/multi-token-standard
+    * From Horizon Games - https://github.com/horizon-games/multi-token-standard
     */
     bytes4 constant public ERC1155_RECEIVED_SIG = 0xf23a6e61;
       bytes4 constant public ERC1155_BATCH_RECEIVED_SIG = 0xbc197c81;
       bytes4 constant public ERC1155_RECEIVED_INVALID = 0xdeadbeef;
-
 
       bytes public lastData;
       address public lastOperator;
