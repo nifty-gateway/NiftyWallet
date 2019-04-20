@@ -39,7 +39,7 @@ contract MasterMultiSig {
 
     uint constant public MAX_OWNER_COUNT = 50;
 
-    address public staticCallContractAddress = 0xe408e82e464e4EEa4B7E7400fC6530648249AE2E;
+    address public staticCallContractAddress = 0x0a6f11803Bc89E3280E24d720EC0813E4c3cFDBE;
 
       /**
    * @dev There are 5 user control wallets, all HSMd

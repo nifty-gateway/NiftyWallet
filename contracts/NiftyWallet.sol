@@ -3,12 +3,17 @@ pragma solidity ^0.5.4;
 contract NiftyWallet {
 
     /**
+     * The Nifty Wallet - the niftiest wallet around!
+     * Author - Duncan Cock Foster. duncan@niftygateway.com
+     */
+
+    /**
      * Constants
      * The address of the master contract, and the account ID for this wallet
      * Account ID is used to retrieve the signing private key for this wallet
      */
 
-    address masterContractAdd = 0xdE2D9906B516bFB62559676E180c7731679429C9;
+    address masterContractAdd = 0x99E267384D63927F7961eD3094c8d21dd882b0DC;
     uint userAccountID = 0;
     uint walletTxCount = 0;
 
