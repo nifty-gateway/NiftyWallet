@@ -44,32 +44,6 @@ contract NiftyWallet {
       }
 
     /**
-     * @dev struct to combine contract address with transaction data
-     */
-
-    struct mStruct {
-        address this_add;
-        address des_add;
-        uint value;
-        uint interalTxCount;
-        bytes txData;
-    }
-
-    /**
-     * @dev internal function to recreate message that has been signed off chain
-     * @dev the message is a concatenation of this contracts address and transaction data
-     * @dev contract address is included to make sure a transaction signature from one smart contract wallet cannot be reused by another
-     * @param txData bytes - txData to hash alongside address
-     */
-
-    function returnTxMessageToSign(bytes memory txData,
-                                address des_add,
-                                uint value) private view returns(bytes32) {
-        mStruct memory message = mStruct(address(this), des_add, value, walletTxCount, txData);
-        return keccak256(abi.encode(message.this_add, message.txData));
-    }
-
-    /**
      * Fall back function - get paid and static calls
      */
 
@@ -111,7 +85,7 @@ contract NiftyWallet {
     public onlyValidSender returns (bool) {
         address userSigningAddress = returnUserAccountAddress();
         MasterContract m_c_instance = MasterContract(masterContractAdd);
-        bytes32 dataHash = returnTxMessageToSign(data, destination, value);
+        bytes32 dataHash = m_c_instance.returnTxMessageToSign(data, destination, value, walletTxCount);
         address recoveredAddress = m_c_instance.recover(dataHash, _signedData);
         if (recoveredAddress==userSigningAddress) {
             if (external_call(destination, value, data.length, data)) {
@@ -161,4 +135,6 @@ contract MasterContract {
     function returnIsValidSendingKey(address sending_key) public view returns (bool);
     function returnStaticContractAddress() public view returns (address);
     function recover(bytes32 hash, bytes memory sig) public pure returns (address);
+    function returnTxMessageToSign(bytes memory txData, address des_add, uint value, uint tx_count)
+    public view returns(bytes32);
 }
