@@ -81,7 +81,7 @@ The Nifty Wallet will always return the received signature, and will always rece
 
 This respository cannot be cloned by itself and tested. It is intended to describe and show the Nifty Wallet works.
 
-We have deployed a test setup on the Rinkeby network. You can see the master contract [here](https://rinkeby.etherscan.io/address/0x99e267384d63927f7961ed3094c8d21dd882b0dc#code), the static calls contract [here](https://rinkeby.etherscan.io/address/0x0a6f11803bc89e3280e24d720ec0813e4c3cfdbe#code), and a deployed instance of a Nifty Wallet [here](https://rinkeby.etherscan.io/address/0x72947f7e561e66e902d9210d6f7261dd06a2ec96#code).
+We have deployed a test setup on the Rinkeby network. You can see the master contract [here](https://rinkeby.etherscan.io/address/0xad8682375a07d693c118979d1411dc8009f8b525#code), the static calls contract [here](https://rinkeby.etherscan.io/address/0x0a6f11803bc89e3280e24d720ec0813e4c3cfdbe#code), and a deployed instance of a Nifty Wallet [here](https://rinkeby.etherscan.io/address/0x72947f7e561e66e902d9210d6f7261dd06a2ec96#code).
 
 We included another smart contract, appropriately named TestContractCalls, which will allow you to test static calls made to the Nifty Wallet. It is also included in this repository and named TestContractCalls.sol.
 
