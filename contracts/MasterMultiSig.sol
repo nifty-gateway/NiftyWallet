@@ -39,7 +39,7 @@ contract MasterMultiSig {
 
     uint constant public MAX_OWNER_COUNT = 50;
 
-    address public staticCallContractAddress = 0x0a6f11803Bc89E3280E24d720EC0813E4c3cFDBE;
+    address public staticCallContractAddress = 0xe408e82e464e4EEa4B7E7400fC6530648249AE2E;
 
       /**
    * @dev There are 5 user control wallets, all HSMd
@@ -221,25 +221,24 @@ contract MasterMultiSig {
    * @dev Stored here to reduce deployment costs of a Nifty Wallet instance
    */
 
-   struct mStruct {
-     address this_add;
-     address des_add;
-     uint value;
-     uint internalTxCount;
-     bytes txData;
- }
+      struct mStruct {
+        address this_add;
+        address des_add;
+        uint value;
+        uint internalTxCount;
+        bytes txData;
+    }
 
- function returnTxMessageToSign(bytes memory txData,
-                             address des_add,
-                             uint value,
-                             uint tx_count) public view returns(bytes32) {
-     mStruct memory message = mStruct(msg.sender, des_add, value, tx_count, txData);
-     return keccak256(abi.encodePacked(message.this_add, message.internalTxCount, message.des_add, message.value, message.txData));
- }
-
+    function returnTxMessageToSign(bytes memory txData,
+                                address des_add,
+                                uint value,
+                                uint tx_count) public view returns(bytes32) {
+        mStruct memory message = mStruct(msg.sender, des_add, value, tx_count, txData);
+        return keccak256(abi.encodePacked(message.this_add, message.des_add, message.value, message.internalTxCount, message.txData));
+    }
 
   /**
-   * Multisig transacitons from https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol
+   * Multisig transactions from https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol
    * Used to call transactions that will modify the master contract
    * Plus maintain owners, etc
    */
