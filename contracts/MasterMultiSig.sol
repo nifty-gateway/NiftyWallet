@@ -221,21 +221,22 @@ contract MasterMultiSig {
    * @dev Stored here to reduce deployment costs of a Nifty Wallet instance
    */
 
-      struct mStruct {
-        address this_add;
-        address des_add;
-        uint value;
-        uint interalTxCount;
-        bytes txData;
-    }
+   struct mStruct {
+     address this_add;
+     address des_add;
+     uint value;
+     uint internalTxCount;
+     bytes txData;
+ }
 
-    function returnTxMessageToSign(bytes memory txData,
-                                address des_add,
-                                uint value,
-                                uint tx_count) public view returns(bytes32) {
-        mStruct memory message = mStruct(msg.sender, des_add, value, tx_count, txData);
-        return keccak256(abi.encode(message.this_add, message.txData));
-    }
+ function returnTxMessageToSign(bytes memory txData,
+                             address des_add,
+                             uint value,
+                             uint tx_count) public view returns(bytes32) {
+     mStruct memory message = mStruct(msg.sender, des_add, value, tx_count, txData);
+     return keccak256(abi.encodePacked(message.this_add, message.internalTxCount, message.des_add, message.value, message.txData));
+ }
+
 
   /**
    * Multisig transacitons from https://github.com/gnosis/MultiSigWallet/blob/master/contracts/MultiSigWallet.sol

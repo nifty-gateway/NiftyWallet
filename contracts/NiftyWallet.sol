@@ -4,7 +4,7 @@ contract NiftyWallet {
 
     /**
      * The Nifty Wallet - the niftiest wallet around!
-     * Author - Duncan Cock Foster. duncan@niftygateway.com
+     * Author - Duncan Cock Foster - duncan@niftygateway.com
      */
 
     /**
