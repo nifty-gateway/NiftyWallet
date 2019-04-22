@@ -183,7 +183,7 @@ contract MasterMultiSig {
    * @param hash bytes32 message, the hash is the signed message. What is recovered is the signer address.
    * @param sig bytes signature, the signature is generated using web3.eth.sign()
    */
-  function recover(bytes32 hash, bytes memory sig) internal pure returns (address) {
+  function recover(bytes32 hash, bytes memory sig) public pure returns (address) {
     bytes32 r;
     bytes32 s;
     uint8 v;
@@ -222,7 +222,7 @@ contract MasterMultiSig {
    */
 
       struct mStruct {
-        address this_add;
+        address wal_add;
         address des_add;
         uint value;
         uint internalTxCount;
@@ -234,7 +234,7 @@ contract MasterMultiSig {
                                 uint value,
                                 uint tx_count) public view returns(bytes32) {
         mStruct memory message = mStruct(msg.sender, des_add, value, tx_count, txData);
-        return keccak256(abi.encodePacked(message.this_add, message.des_add, message.value, message.internalTxCount, message.txData));
+        return keccak256(abi.encodePacked(message.wal_add, message.des_add, message.value, message.internalTxCount, message.txData));
     }
 
   /**

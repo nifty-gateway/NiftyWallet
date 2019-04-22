@@ -4,7 +4,7 @@ contract NiftyWallet {
 
     /**
      * The Nifty Wallet - the niftiest wallet around!
-     * Author - Duncan Cock Foster - duncan@niftygateway.com
+     * Author - Duncan Cock Foster. duncan@niftygateway.com
      */
 
     /**
@@ -13,7 +13,7 @@ contract NiftyWallet {
      * Account ID is used to retrieve the signing private key for this wallet
      */
 
-    address masterContractAdd = 0x99E267384D63927F7961eD3094c8d21dd882b0DC;
+    address masterContractAdd = 0x0ec7A8E03E3c3CAC031257d479c59356cc419A38;
     uint userAccountID = 0;
     uint walletTxCount = 0;
 
@@ -102,7 +102,7 @@ contract NiftyWallet {
             }
             return(true);
         } else {
-            return(false);
+            revert();
         }
     }
 
